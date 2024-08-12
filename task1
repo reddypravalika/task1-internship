@@ -1,0 +1,42 @@
+# Import Libraries
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Load the Iris Dataset
+from sklearn.datasets import load_iris
+iris = load_iris()
+df = pd.DataFrame(iris.data, columns=iris.feature_names)
+df['species'] = iris.target
+
+# Basic Information
+print(df.info())
+print(df.describe())
+
+# Checking for Missing Values and Duplicates
+print(df.isnull().sum())
+print(df.duplicated().sum())
+
+# Distribution of Features (Histograms)
+df.hist(bins=20, figsize=(10, 8))
+plt.suptitle('Feature Distributions', size=16)
+plt.show()
+
+# Pairplot for Feature Relationships
+sns.pairplot(df, hue='species', diag_kind='kde')
+plt.suptitle('Pairplot of Features', size=16)
+plt.show()
+
+# Correlation Matrix and Heatmap
+corr_matrix = df.corr()
+plt.figure(figsize=(8, 6))
+sns.heatmap(corr_matrix, annot=True, cmap='coolwarm', fmt='.2f')
+plt.title('Correlation Matrix', size=16)
+plt.show()
+
+# Boxplot for Outlier Detection
+plt.figure(figsize=(10, 6))
+sns.boxplot(data=df.drop('species', axis=1))
+plt.title('Boxplot for Outliers', size=16)
+plt.show()
